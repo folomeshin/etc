@@ -1,0 +1,2 @@
+filename = "Quasar QA Planning - ${new Date().format("yyyy-MM-dd-HH-mm-ss-z", TimeZone.getTimeZone('EST'))}.xlsx".toString();
+issues = bpHelper.searchIssues('project = Storyteller AND fixVersion = Quasar  AND issuetype in (Story, Spike, "Tech Debt") AND status not in ("Story: Cancelled", "Tech Debt: Cancelled")');
