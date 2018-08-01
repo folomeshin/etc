@@ -3,9 +3,7 @@ import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.web.bean.PagerFilter;
 import com.atlassian.jira.issue.MutableIssue;
-//import com.atlassian.greenhopper.service.sprint.Sprint
 import com.atlassian.jira.issue.util.AggregateTimeTrackingCalculatorFactory;
-import com.atlassian.jira.ComponentManager;
 import com.atlassian.jira.issue.util.AggregateTimeTrackingBean;
 import com.atlassian.jira.issue.CustomFieldManager;
 import com.atlassian.jira.issue.history.ChangeItemBean;
@@ -24,7 +22,7 @@ bpHelper2 = new BlueprintHelper2();
 bpHelper2.log = new Logger();
 
 //burndownChartModel3 = bpHelper2.getBurndownChartModel("Quasar-Sprint-6");
-burndownChartModel4 = bpHelper2.getBurndownChartModel("Quasar-Sprint-8");
+burndownChartModel4 = bpHelper2.getBurndownChartModel("Quasar-Sprint-9");
 
 //log?.warn(bpHelper2.log.log.join("\n"));
 
@@ -333,7 +331,6 @@ public class BlueprintHelper2 {
 	{
 		List<ChangeHistory> list = new ArrayList<ChangeHistory>();
 	
-		def componentManager = ComponentManager.getInstance();
 		def changeHistoryManager = ComponentAccessor.getChangeHistoryManager();
 		Date sinceMinus;
 		use (TimeCategory) {

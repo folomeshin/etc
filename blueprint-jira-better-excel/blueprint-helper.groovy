@@ -3,7 +3,6 @@ import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.web.bean.PagerFilter;
 import com.atlassian.jira.issue.util.AggregateTimeTrackingCalculatorFactory;
-import com.atlassian.jira.ComponentManager;
 import com.atlassian.jira.issue.util.AggregateTimeTrackingBean;
 import com.atlassian.jira.issue.CustomFieldManager;
 import com.atlassian.jira.issue.history.ChangeItemBean;
@@ -65,7 +64,7 @@ public class BlueprintHelper {
 	
 
 	public def getAggregates(Issue issue) {
-		def timeTrackingCalculatorFactory = ComponentManager.getComponentInstanceOfType(AggregateTimeTrackingCalculatorFactory.class)
+		def timeTrackingCalculatorFactory = ComponentAccessor.getOSGiComponentInstanceOfType(AggregateTimeTrackingCalculatorFactory.class)
 		def calculator = timeTrackingCalculatorFactory.getCalculator(issue);
 		return calculator.getAggregates(issue);
 	}
@@ -94,7 +93,6 @@ public class BlueprintHelper {
 	
 	public def getDecomposedEstimate(Issue issue) {
 		
-		def componentManager = ComponentManager.getInstance()
 		def issueLinkManager = ComponentAccessor.getIssueLinkManager();
 		def cfManager = ComponentAccessor.getCustomFieldManager()
 
@@ -122,7 +120,6 @@ public class BlueprintHelper {
 	
 	public def getReadyEstimate(Issue issue) {
 		
-		def componentManager = ComponentManager.getInstance()
 		def issueLinkManager = ComponentAccessor.getIssueLinkManager();
 		def cfManager = ComponentAccessor.getCustomFieldManager()
 
@@ -150,7 +147,6 @@ public class BlueprintHelper {
 	
 	public def getInDevEstimate(Issue issue) {
 		
-		def componentManager = ComponentManager.getInstance()
 		def issueLinkManager = ComponentAccessor.getIssueLinkManager();
 		def cfManager = ComponentAccessor.getCustomFieldManager()
 
@@ -175,7 +171,6 @@ public class BlueprintHelper {
 	
 	public def getValidationEstimate(Issue issue) {
 		
-		def componentManager = ComponentManager.getInstance()
 		def issueLinkManager = ComponentAccessor.getIssueLinkManager();
 		def cfManager = ComponentAccessor.getCustomFieldManager()
 
@@ -319,7 +314,6 @@ public class BlueprintHelper {
 	
 	public def getTimeBetweenStates(Issue issue, def startStatuses, def endStatuses, boolean isStartStatusFirst)
 	{	
-		def componentManager = ComponentManager.getInstance()
 		def changeHistoryManager = ComponentAccessor.getChangeHistoryManager()
 
 		def doneStatuses = ["story: done", "tech debt: done", "devops: done"]
