@@ -274,6 +274,11 @@ public class BlueprintHelper {
 		return sprint;
 	}
 	
+	public def getLastSprintLabel(Issue issue)
+	{
+		return getLastSprint(issue)?.replace("uasar", "")?.replace("egasus", "");
+	}
+	
 	
 	public def getCycleTime(Issue issue)
 	{

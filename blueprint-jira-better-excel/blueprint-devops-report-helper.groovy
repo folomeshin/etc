@@ -1,0 +1,2 @@
+filename = "DevOps Report - ${new Date().format("yyyy-MM-dd-HH-mm-ss-z", TimeZone.getTimeZone('EST'))}.xlsx".toString();
+issues = bpHelper.searchIssues('project = Storyteller AND issuetype in (DevOps) AND Team = DevOps AND status in ("DevOps: Done") AND resolutiondate >= startOfMonth(-1M)');
