@@ -444,6 +444,17 @@ public class BlueprintHelper {
 		return "Unknown";
 	}
 	
+	public def isInBacklogHealth(Issue issue)
+	{
+		def type = issue?.issueType?.name?.toLowerCase();
+		def status = issue?.statusObject?.name?.toLowerCase();
+		if((status in ["story: ready", "tech debt: ready"])
+			|| (type == "spike" && status == "story: new"))
+			return "Yes";
+		
+		return null;
+	}
+	
 	public def getBugToTriageCount() {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status = "Bug: Triage"').size();
 	}
