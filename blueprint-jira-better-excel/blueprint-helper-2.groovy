@@ -22,7 +22,7 @@ bpHelper2 = new BlueprintHelper2();
 bpHelper2.log = new Logger();
 
 //burndownChartModel3 = bpHelper2.getBurndownChartModel("Quasar-Sprint-6");
-burndownChartModel4 = bpHelper2.getBurndownChartModel("Quasar-Sprint-9");
+burndownChartModel4 = bpHelper2.getBurndownChartModel("Quasar-Sprint-11");
 
 //log?.warn(bpHelper2.log.log.join("\n"));
 
