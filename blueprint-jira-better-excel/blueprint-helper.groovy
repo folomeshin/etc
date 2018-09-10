@@ -202,10 +202,10 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "Quasar";
+		String release = "Rocket";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
-		def i = 14; // the number of sprints
+		def i = 8; // the number of sprints
 		while(i > 0)
 		{
 			if(label.contains(labelTemplate + i))
@@ -214,6 +214,21 @@ public class BlueprintHelper {
 				break;
 			}
 			i--;
+		}
+		if(commitmentSprint == null)
+		{
+			release = "Quasar";
+			labelTemplate = "Commitment." + release;
+			i = 14;
+			while(i > 0)
+			{
+				if(label.contains(labelTemplate + i))
+				{
+					commitmentSprint = release + i;
+					break;
+				}
+				i--;
+			}
 		}
 		if(commitmentSprint == null)
 		{
@@ -242,10 +257,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Quasar";
+		String release = "Rocket";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 14; // the number of sprints
+		def i = 8; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -254,6 +269,21 @@ public class BlueprintHelper {
 				break;
 			}
 			i--;
+		}
+		if(sprint == null)
+		{
+			release = "Quasar";
+			sprintTemplate = release + "-Sprint-";
+			i = 14;
+			while(i > 0)
+			{
+				if(sprints.contains(sprintTemplate + i))
+				{
+					sprint = release + i;
+					break;
+				}
+				i--;
+			}
 		}
 		if(sprint == null)
 		{
