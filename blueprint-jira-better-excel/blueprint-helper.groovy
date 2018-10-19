@@ -185,7 +185,8 @@ public class BlueprintHelper {
 		issueLinkManager.getOutwardLinks(issue.id)?.each {issueLink ->
 			if (issueLink.issueLinkType.name == "Epic-Story Link" && 
 				issueLink.destinationObject.status.name in ["Story: Ready for Validation", "Story: Validation", "Story: Validation - On Hold", "Story: Demo Checkpoint", "Story: Demo Checkpoint - On Hold",
-					"Tech Debt: Ready for Validation", "Tech Debt: Validation", "Tech Debt: Validation - On Hold", "Tech Debt: Demo Checkpoint", "Tech Debt: Demo Checkpoint - On Hold"]) {
+					"Tech Debt: Ready for Validation", "Tech Debt: Validation", "Tech Debt: Validation - On Hold", "Tech Debt: Demo Checkpoint", "Tech Debt: Demo Checkpoint - On Hold",
+					"DevOps: Ready for Validation", "DevOps: Validation", "DevOps: Validation - On Hold", "DevOps: Demo Checkpoint", "DevOps: Demo Checkpoint - On Hold"]) {
 				def SP = issueLink.destinationObject.getCustomFieldValue(customField) ?: 0
 				readySP += SP as Double;
 			}
@@ -217,9 +218,9 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Quasar";
+			release = "Rocket";
 			labelTemplate = "Commitment." + release;
-			i = 14;
+			i = 6;
 			while(i > 0)
 			{
 				if(label.contains(labelTemplate + i))
@@ -232,9 +233,9 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Pegasus";
+			release = "Quasar";
 			labelTemplate = "Commitment." + release;
-			i = 8;
+			i = 14;
 			while(i > 0)
 			{
 				if(label.contains(labelTemplate + i))
@@ -285,28 +286,13 @@ public class BlueprintHelper {
 				i--;
 			}
 		}
-		if(sprint == null)
-		{
-			release = "Pegasus";
-			sprintTemplate = release + "-Sprint-";
-			i = 8;
-			while(i > 0)
-			{
-				if(sprints.contains(sprintTemplate + i))
-				{
-					sprint = release + i;
-					break;
-				}
-				i--;
-			}
-		}
 		
 		return sprint;
 	}
 	
 	public def getLastSprintLabel(Issue issue)
 	{
-		return getLastSprint(issue)?.replace("uasar", "")?.replace("egasus", "");
+		return getLastSprint(issue)?.replace("ocket", "")?.replace("uasar", "");
 	}
 	
 	
@@ -319,31 +305,31 @@ public class BlueprintHelper {
 	
 	public def getDevelopmentTime(Issue issue)
 	{
-		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt"]))
+		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt", "devops"]))
 			return null;
 		
-		def startStatuses = ["story: in development", "tech debt: in development"];
-		def endStatuses = ["story: ready for validation", "tech debt: ready for validation"];
+		def startStatuses = ["story: in development", "tech debt: in development", "devops: in development"];
+		def endStatuses = ["story: ready for validation", "tech debt: ready for validation", "devops: ready for validation"];
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, true);
 	}
 	
 	public def getReadyForValidationTime(Issue issue)
 	{
-		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt"]))
+		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt", "devops"]))
 			return null;
 		
-		def startStatuses = ["story: ready for validation", "tech debt: ready for validation"];
-		def endStatuses = ["story: validation", "tech debt: validation"];
+		def startStatuses = ["story: ready for validation", "tech debt: ready for validation", "devops: ready for validation"];
+		def endStatuses = ["story: validation", "tech debt: validation", "devops: validation"];
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, false) - 1;
 	}
 	
 	public def getValidationTime(Issue issue)
 	{
-		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt"]))
+		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt", "devops"]))
 			return null;
 		
-		def startStatuses = ["story: validation", "tech debt: validation"];
-		def endStatuses = ["story: done", "tech debt: done"];
+		def startStatuses = ["story: validation", "tech debt: validation", "devops: validation"];
+		def endStatuses = ["story: done", "tech debt: done", "devops: done"];
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, false) - 1;
 	}
 	
@@ -361,10 +347,7 @@ public class BlueprintHelper {
 		
 		def df = new SimpleDateFormat("dd.MM.yyy");
 		def holidays = [
-			df.parse("25.12.2017"), // Christmas Day
-			df.parse("26.12.2017"), // Boxing Day
-			df.parse("01.01.2018"), // New Year
-			df.parse("19.02.2018"), // Famaily Day
+			df.parse("19.02.2018"), // Family Day
 			df.parse("30.03.2018"), // Good Friday
 			df.parse("21.05.2018"), // Victoria Day
 			df.parse("02.07.2018"), // Canada Day
@@ -372,7 +355,8 @@ public class BlueprintHelper {
 			df.parse("03.09.2018"), // Labour Day
 			df.parse("08.10.2018"), // Thanksgiving
 			df.parse("25.12.2018"), // Christmas Day
-			df.parse("26.12.2018") // Boxing Day
+			df.parse("26.12.2018"), // Boxing Day
+			df.parse("01.01.2019"), // New Year
 		];
 		
 		changeHistoryManager.getChangeItemsForField(issue, "status").each {ChangeItemBean item ->
@@ -433,18 +417,21 @@ public class BlueprintHelper {
 		def newStatuses = ["epic: new", "epic: decomposition", "epic: review",
 			"story: prototype done", "story: new", "story: review",
 			"tech debt: prototype done", "tech debt: new", "tech debt: review",
+			"devops: prototype done", "devops: new", "devops: review",
 			"bug: new", "bug: new - on hold", "bug: triage", "bug: investigate"];
-		def readyStatuses = ["epic: ready", "story: ready", "tech debt: ready", "bug: ready"];
+		def readyStatuses = ["epic: ready", "story: ready", "tech debt: ready", "devops: ready", "bug: ready"];
 		def inDevStatuses = ["epic: in development",
 			"story: in development", "story: in development - on hold",
 			"tech debt: in development", "tech debt: in development - on hold",
+			"devops: in development", "devops: in development - on hold",
 			"bug: in development", "bug: in development - on hold"];
 		def validationStatuses = ["epic: demo",
 			"story: ready for validation", "story: validation", "story: validation - on hold", "story: demo checkpoint", "story: demo checkpoint - on hold",
 			"tech debt: ready for validation", "tech debt: validation", "tech debt: validation - on hold", "tech debt: demo checkpoint", "tech debt: demo checkpoint - on hold",
+			"devops: ready for validation", "devops: validation", "devops: validation - on hold", "devops: demo checkpoint", "devops: demo checkpoint - on hold",
 			"bug: validation", "bug: validation - on hold"];
-		def closedStatuses = ["epic: done", "story: done", "tech debt: done", "bug: closed"];
-		def cancelledStatuses = ["epic: cancelled", "story: cancelled", "tech debt: cancelled"];
+		def closedStatuses = ["epic: done", "story: done", "tech debt: done", "devops: done", "bug: closed"];
+		def cancelledStatuses = ["epic: cancelled", "story: cancelled", "tech debt: cancelled", "devops: cancelled"];
 		
 		if(status in newStatuses)
 		{
@@ -478,7 +465,7 @@ public class BlueprintHelper {
 	{
 		def type = issue?.issueType?.name?.toLowerCase();
 		def status = issue?.statusObject?.name?.toLowerCase();
-		if((status in ["story: ready", "tech debt: ready"])
+		if((status in ["story: ready", "tech debt: ready", "devops: ready"])
 			|| (type == "spike" && status == "story: new"))
 			return "Yes";
 		
@@ -490,7 +477,7 @@ public class BlueprintHelper {
 	}
 	
 	public def getQuasarComponent(Issue issue) {
-		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt"]))
+		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
 			return null;
 		}
@@ -504,9 +491,17 @@ public class BlueprintHelper {
 		}
 		else if(fieldValue == "Artifact List")
 		{
-			return "Artifact List v2";
+			return "Artifact List";
 		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Admin", "Release Management", "R&D DevOps"])
+		else if(fieldValue == "Cross Project Move")
+		{
+			return "Cross Project Move";
+		}
+		else if(fieldValue == "Excel Import")
+		{
+			return "Excel Import";
+		}
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management", "R&D DevOps"])
 		{
 			return "R&D Bucket";
 		}
