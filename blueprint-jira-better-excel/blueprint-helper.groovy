@@ -476,7 +476,7 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status = "Bug: Triage"').size();
 	}
 	
-	public def getQuasarComponent(Issue issue) {
+	public def getRocketComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
 			return null;
@@ -489,13 +489,9 @@ public class BlueprintHelper {
 		{
 			return "UME";
 		}
-		else if(fieldValue == "Artifact List")
-		{
-			return "Artifact List";
-		}
 		else if(fieldValue == "Cross Project Move")
 		{
-			return "Cross Project Move";
+			return "CPM";
 		}
 		else if(fieldValue == "Excel Import")
 		{
@@ -504,6 +500,10 @@ public class BlueprintHelper {
 		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management", "R&D DevOps"])
 		{
 			return "R&D Bucket";
+		}
+		else if(fieldValue == "DevOps")
+		{
+			return "DevOps";
 		}
 		
 		return "Other";
