@@ -487,7 +487,7 @@ public class BlueprintHelper {
 		
 		if(fieldValue == "Diagram Editor")
 		{
-			return "UME";
+			return "UME v2";
 		}
 		else if(fieldValue == "Cross Project Move")
 		{
