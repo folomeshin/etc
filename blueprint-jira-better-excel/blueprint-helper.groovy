@@ -109,7 +109,7 @@ public class BlueprintHelper {
 			   ((issueLink.destinationObject.issueType.name == "Spike" && !(issueLink.destinationObject.status.name in ["Story: Cancelled"])) || (issueLink.destinationObject.issueType.name in ["Story", "Tech Debt", "DevOps"]
 			   && !(issueLink.destinationObject.status.name in ["Story: New", "Story: Review", "Story: Cancelled",
 																"Tech Debt: New", "Tech Debt: Review", "Tech Debt: Cancelled",
-																"DevOps: New", "Backlog"])))) {
+																"DevOps: New"])))) {
 				def SP = issueLink.destinationObject.getCustomFieldValue(customField) ?: 0
 				decomposedSP += SP as Double;
 			}
@@ -160,7 +160,7 @@ public class BlueprintHelper {
 
 		issueLinkManager.getOutwardLinks(issue.id)?.each {issueLink ->
 			if (issueLink.issueLinkType.name == "Epic-Story Link" && 
-				issueLink.destinationObject.status.name in ["Story: In Development", "Story: In Development - On Hold", "Tech Debt: In Development", "Tech Debt: In Development - On Hold"]) {
+				issueLink.destinationObject.status.name in ["Story: In Development", "Story: In Development - On Hold", "Tech Debt: In Development", "Tech Debt: In Development - On Hold", "DevOps: In Progress"]) {
 				def SP = issueLink.destinationObject.getCustomFieldValue(customField) ?: 0
 				readySP += SP as Double;
 			}
@@ -185,8 +185,7 @@ public class BlueprintHelper {
 		issueLinkManager.getOutwardLinks(issue.id)?.each {issueLink ->
 			if (issueLink.issueLinkType.name == "Epic-Story Link" && 
 				issueLink.destinationObject.status.name in ["Story: Ready for Validation", "Story: Validation", "Story: Validation - On Hold", "Story: Demo Checkpoint", "Story: Demo Checkpoint - On Hold",
-					"Tech Debt: Ready for Validation", "Tech Debt: Validation", "Tech Debt: Validation - On Hold", "Tech Debt: Demo Checkpoint", "Tech Debt: Demo Checkpoint - On Hold",
-					"DevOps: Ready for Validation", "DevOps: Validation", "DevOps: Validation - On Hold", "DevOps: Demo Checkpoint", "DevOps: Demo Checkpoint - On Hold"]) {
+					"Tech Debt: Ready for Validation", "Tech Debt: Validation", "Tech Debt: Validation - On Hold", "Tech Debt: Demo Checkpoint", "Tech Debt: Demo Checkpoint - On Hold"]) {
 				def SP = issueLink.destinationObject.getCustomFieldValue(customField) ?: 0
 				readySP += SP as Double;
 			}
@@ -308,28 +307,28 @@ public class BlueprintHelper {
 		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt", "devops"]))
 			return null;
 		
-		def startStatuses = ["story: in development", "tech debt: in development", "devops: in development"];
-		def endStatuses = ["story: ready for validation", "tech debt: ready for validation", "devops: ready for validation"];
+		def startStatuses = ["story: in development", "tech debt: in development", "devops: in progress"];
+		def endStatuses = ["story: ready for validation", "tech debt: ready for validation", "devops: done"];
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, true);
 	}
 	
 	public def getReadyForValidationTime(Issue issue)
 	{
-		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt", "devops"]))
+		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt"]))
 			return null;
 		
-		def startStatuses = ["story: ready for validation", "tech debt: ready for validation", "devops: ready for validation"];
-		def endStatuses = ["story: validation", "tech debt: validation", "devops: validation"];
+		def startStatuses = ["story: ready for validation", "tech debt: ready for validation"];
+		def endStatuses = ["story: validation", "tech debt: validation"];
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, false) - 1;
 	}
 	
 	public def getValidationTime(Issue issue)
 	{
-		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt", "devops"]))
+		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt"]))
 			return null;
 		
-		def startStatuses = ["story: validation", "tech debt: validation", "devops: validation"];
-		def endStatuses = ["story: done", "tech debt: done", "devops: done"];
+		def startStatuses = ["story: validation", "tech debt: validation"];
+		def endStatuses = ["story: done", "tech debt: done"];
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, false) - 1;
 	}
 	
@@ -417,21 +416,20 @@ public class BlueprintHelper {
 		def newStatuses = ["epic: new", "epic: decomposition", "epic: review",
 			"story: prototype done", "story: new", "story: review",
 			"tech debt: prototype done", "tech debt: new", "tech debt: review",
-			"devops: prototype done", "devops: new", "devops: review",
+			"devops: new", "devops: on hold",
 			"bug: new", "bug: new - on hold", "bug: triage", "bug: investigate"];
 		def readyStatuses = ["epic: ready", "story: ready", "tech debt: ready", "devops: ready", "bug: ready"];
 		def inDevStatuses = ["epic: in development",
 			"story: in development", "story: in development - on hold",
 			"tech debt: in development", "tech debt: in development - on hold",
-			"devops: in development", "devops: in development - on hold",
+			"devops: in progress",
 			"bug: in development", "bug: in development - on hold"];
 		def validationStatuses = ["epic: demo",
 			"story: ready for validation", "story: validation", "story: validation - on hold", "story: demo checkpoint", "story: demo checkpoint - on hold",
 			"tech debt: ready for validation", "tech debt: validation", "tech debt: validation - on hold", "tech debt: demo checkpoint", "tech debt: demo checkpoint - on hold",
-			"devops: ready for validation", "devops: validation", "devops: validation - on hold", "devops: demo checkpoint", "devops: demo checkpoint - on hold",
 			"bug: validation", "bug: validation - on hold"];
 		def closedStatuses = ["epic: done", "story: done", "tech debt: done", "devops: done", "bug: closed"];
-		def cancelledStatuses = ["epic: cancelled", "story: cancelled", "tech debt: cancelled", "devops: cancelled"];
+		def cancelledStatuses = ["epic: cancelled", "story: cancelled", "tech debt: cancelled"];
 		
 		if(status in newStatuses)
 		{
@@ -497,9 +495,13 @@ public class BlueprintHelper {
 		{
 			return "Excel Import";
 		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management", "R&D DevOps"])
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
 			return "R&D Bucket";
+		}
+		else if(fieldValue == "CICD")
+		{
+			return "CI/CD";
 		}
 		else if(fieldValue == "DevOps")
 		{
@@ -507,6 +509,15 @@ public class BlueprintHelper {
 		}
 		
 		return "Other";
+	}
+	
+	public def getDevOpsType(Issue issue) {
+		if(issue.issueType.name != "DevOps"){
+			return null;
+		}
+
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("DevOps Task Type");
+		return issue.getCustomFieldValue(customField);
 	}
 	
 	public def getToday() {
