@@ -136,7 +136,7 @@ public class BlueprintHelper {
 			   ((issueLink.destinationObject.issueType.name == "Story" && issueLink.destinationObject.status.name == "Story: Ready")
 			   || (issueLink.destinationObject.issueType.name == "Spike" && issueLink.destinationObject.status.name == "Story: New")
 			   || (issueLink.destinationObject.issueType.name == "Tech Debt" && issueLink.destinationObject.status.name == "Tech Debt: Ready")
-			   || (issueLink.destinationObject.issueType.name == "DevOps" && issueLink.destinationObject.status.name == "DevOps: Ready"))) {
+			   || (issueLink.destinationObject.issueType.name == "DevOps" && issueLink.destinationObject.status.name in ["DevOps: Ready", "DevOps: On Hold"]))) {
 				def SP = issueLink.destinationObject.getCustomFieldValue(customField) ?: 0
 				readySP += SP as Double;
 			}
