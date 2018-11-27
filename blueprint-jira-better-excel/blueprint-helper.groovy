@@ -495,6 +495,10 @@ public class BlueprintHelper {
 		{
 			return "Excel Import";
 		}
+		else if(fieldValue == "Bulk Update")
+		{
+			return "Bulk Edit";
+		}
 		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
 			return "R&D Bucket";
