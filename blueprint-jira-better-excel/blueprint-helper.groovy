@@ -474,6 +474,10 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status = "Bug: Triage"').size();
 	}
 	
+	public def getCustomP0P1BugCount() {
+		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND Customer is not EMPTY AND priority in (Highest, High)').size();
+	} 
+	
 	public def getRocketComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
