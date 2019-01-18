@@ -202,7 +202,7 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "Rocket";
+		String release = "Saturn";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
 		def i = 8; // the number of sprints
@@ -217,7 +217,7 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Rocket";
+			release = "Saturn";
 			labelTemplate = "Commitment." + release;
 			i = 6;
 			while(i > 0)
@@ -230,6 +230,22 @@ public class BlueprintHelper {
 				i--;
 			}
 		}
+		if(commitmentSprint == null)
+		{
+			release = "Rocket";
+			labelTemplate = "Commitment." + release;
+			i = 7;
+			while(i > 0)
+			{
+				if(label.contains(labelTemplate + i))
+				{
+					commitmentSprint = release + i;
+					break;
+				}
+				i--;
+			}
+		}
+		// TODO: Remove for Saturn
 		if(commitmentSprint == null)
 		{
 			release = "Quasar";
@@ -257,10 +273,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Rocket";
+		String release = "Saturn";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 8; // the number of sprints
+		def i = 6; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -270,6 +286,22 @@ public class BlueprintHelper {
 			}
 			i--;
 		}
+		if(sprint == null)
+		{
+			release = "Rocket";
+			sprintTemplate = release + "-Sprint-";
+			i = 7;
+			while(i > 0)
+			{
+				if(sprints.contains(sprintTemplate + i))
+				{
+					sprint = release + i;
+					break;
+				}
+				i--;
+			}
+		}
+		// TODO: Remove for Saturn
 		if(sprint == null)
 		{
 			release = "Quasar";
@@ -478,6 +510,7 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND Customer is not EMPTY AND priority in (Highest, High)').size();
 	} 
 	
+	// TODO: Remove for Saturn
 	public def getRocketComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
@@ -502,6 +535,43 @@ public class BlueprintHelper {
 		else if(fieldValue == "Bulk Update")
 		{
 			return "Bulk Edit";
+		}
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		{
+			return "R&D Bucket";
+		}
+		else if(fieldValue == "CICD")
+		{
+			return "CI/CD";
+		}
+		else if(fieldValue == "DevOps")
+		{
+			return "DevOps";
+		}
+		
+		return "Other";
+	}
+	
+	public def getSaturnComponent(Issue issue) {
+		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
+		{
+			return null;
+		}
+		
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
+		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
+		
+		if(fieldValue == "Diagram Editor")
+		{
+			return "UME v3";
+		}
+		else if(fieldValue == "Reuse")
+		{
+			return "Reuse";
+		}
+		else if(fieldValue == "Drag & Drop")
+		{
+			return "Drag & Drop";
 		}
 		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
