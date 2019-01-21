@@ -508,7 +508,10 @@ public class BlueprintHelper {
 	
 	public def getCustomP0P1BugCount() {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND Customer is not EMPTY AND priority in (Highest, High)').size();
-	} 
+	}
+	public def getTotalP0P1BugCount() {
+		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
+	}
 	
 	// TODO: Remove for Saturn
 	public def getRocketComponent(Issue issue) {
