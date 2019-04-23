@@ -1,0 +1,2 @@
+filename = "Titan Dashboard - ${new Date().format("yyyy-MM-dd-HH-mm-ss-z", TimeZone.getTimeZone('EST'))}.xlsx".toString();
+issues = bpHelper.searchIssues('project = Storyteller AND issuetype in (Epic, Story, Spike, "Tech Debt", DevOps, Bug) AND (fixVersion in (Titan) OR (fixVersion = Saturn AND (Sprint in (124, 125, 126, 127, 128, 129, 130) OR Sprint is EMPTY ))) AND status not in ("Epic: Cancelled", "Story: Cancelled", "Tech Debt: Cancelled", "DevOps: Cancelled")');

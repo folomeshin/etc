@@ -202,10 +202,10 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "Saturn";
+		String release = "Titan";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
-		def i = 8; // the number of sprints
+		def i = 7; // the number of sprints
 		while(i > 0)
 		{
 			if(label.contains(labelTemplate + i))
@@ -245,22 +245,6 @@ public class BlueprintHelper {
 				i--;
 			}
 		}
-		// TODO: Remove for Saturn
-		if(commitmentSprint == null)
-		{
-			release = "Quasar";
-			labelTemplate = "Commitment." + release;
-			i = 14;
-			while(i > 0)
-			{
-				if(label.contains(labelTemplate + i))
-				{
-					commitmentSprint = release + i;
-					break;
-				}
-				i--;
-			}
-		}
 		
 		return commitmentSprint;
 	}
@@ -273,10 +257,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Saturn";
+		String release = "Titan";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 6; // the number of sprints
+		def i = 7; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -285,6 +269,21 @@ public class BlueprintHelper {
 				break;
 			}
 			i--;
+		}
+		if(sprint == null)
+		{
+			release = "Saturn";
+			sprintTemplate = release + "-Sprint-";
+			i = 6;
+			while(i > 0)
+			{
+				if(sprints.contains(sprintTemplate + i))
+				{
+					sprint = release + i;
+					break;
+				}
+				i--;
+			}
 		}
 		if(sprint == null)
 		{
@@ -301,29 +300,13 @@ public class BlueprintHelper {
 				i--;
 			}
 		}
-		// TODO: Remove for Saturn
-		if(sprint == null)
-		{
-			release = "Quasar";
-			sprintTemplate = release + "-Sprint-";
-			i = 14;
-			while(i > 0)
-			{
-				if(sprints.contains(sprintTemplate + i))
-				{
-					sprint = release + i;
-					break;
-				}
-				i--;
-			}
-		}
 		
 		return sprint;
 	}
 	
 	public def getLastSprintLabel(Issue issue)
 	{
-		return getLastSprint(issue)?.replace("ocket", "")?.replace("uasar", "");
+		return getLastSprint(issue)?.replace("aturn", "")?.replace("ocket", "");
 	}
 	
 	
@@ -378,16 +361,16 @@ public class BlueprintHelper {
 		
 		def df = new SimpleDateFormat("dd.MM.yyy");
 		def holidays = [
-			df.parse("19.02.2018"), // Family Day
-			df.parse("30.03.2018"), // Good Friday
-			df.parse("21.05.2018"), // Victoria Day
-			df.parse("02.07.2018"), // Canada Day
-			df.parse("06.08.2018"), // Civic Holiday
-			df.parse("03.09.2018"), // Labour Day
-			df.parse("08.10.2018"), // Thanksgiving
-			df.parse("25.12.2018"), // Christmas Day
-			df.parse("26.12.2018"), // Boxing Day
 			df.parse("01.01.2019"), // New Year
+			df.parse("18.02.2019"), // Family Day
+			df.parse("19.04.2019"), // Good Friday
+			df.parse("20.05.2019"), // Victoria Day
+			df.parse("01.07.2019"), // Canada Day
+			df.parse("05.08.2019"), // Civic Holiday
+			df.parse("02.09.2019"), // Labour Day
+			df.parse("014.10.2019"), // Thanksgiving
+			df.parse("25.12.2019"), // Christmas Day
+			df.parse("28.12.2019"), // Boxing Day
 		];
 		
 		changeHistoryManager.getChangeItemsForField(issue, "status").each {ChangeItemBean item ->
@@ -513,8 +496,7 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
 	}
 	
-	// TODO: Remove for Saturn
-	public def getRocketComponent(Issue issue) {
+	public def getTitanComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
 			return null;
@@ -523,21 +505,17 @@ public class BlueprintHelper {
 		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
 		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
 		
-		if(fieldValue == "Diagram Editor")
+		if(fieldValue == "Glossary")
 		{
-			return "UME v2";
+			return "Glossary";
 		}
-		else if(fieldValue == "Cross Project Move")
+		else if(fieldValue == "Reuse")
 		{
-			return "CPM";
+			return "Reuse";
 		}
-		else if(fieldValue == "Excel Import")
+		else if(fieldValue == "Doc Gen")
 		{
-			return "Excel Import";
-		}
-		else if(fieldValue == "Bulk Update")
-		{
-			return "Bulk Edit";
+			return "Doc Gen";
 		}
 		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
