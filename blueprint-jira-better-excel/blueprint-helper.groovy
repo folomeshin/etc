@@ -202,7 +202,7 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "Titan";
+		String release = "Ursa";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
 		def i = 7; // the number of sprints
@@ -217,9 +217,9 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Saturn";
+			release = "Titan";
 			labelTemplate = "Commitment." + release;
-			i = 6;
+			i = 7;
 			while(i > 0)
 			{
 				if(label.contains(labelTemplate + i))
@@ -232,9 +232,9 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Rocket";
+			release = "Saturn";
 			labelTemplate = "Commitment." + release;
-			i = 7;
+			i = 6;
 			while(i > 0)
 			{
 				if(label.contains(labelTemplate + i))
@@ -257,7 +257,7 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Titan";
+		String release = "Ursa";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
 		def i = 7; // the number of sprints
@@ -272,9 +272,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Saturn";
+			release = "Titan";
 			sprintTemplate = release + "-Sprint-";
-			i = 6;
+			i = 7;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
@@ -287,9 +287,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Rocket";
+			release = "Saturn";
 			sprintTemplate = release + "-Sprint-";
-			i = 7;
+			i = 6;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
@@ -494,6 +494,43 @@ public class BlueprintHelper {
 	}
 	public def getTotalP0P1BugCount() {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
+	}
+	
+	public def getUrsaComponent(Issue issue) {
+		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
+		{
+			return null;
+		}
+		
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
+		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
+		
+		if(fieldValue == "Version Compare")
+		{
+			return "Version Compare";
+		}
+		else if(fieldValue == "Traces")
+		{
+			return "Traces";
+		}
+		else if(fieldValue == "Process Artifact")
+		{
+			return "Process Improvements";
+		}
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		{
+			return "R&D Bucket";
+		}
+		else if(fieldValue == "CICD")
+		{
+			return "CI/CD";
+		}
+		else if(fieldValue == "DevOps")
+		{
+			return "DevOps";
+		}
+		
+		return "Other";
 	}
 	
 	public def getTitanComponent(Issue issue) {
