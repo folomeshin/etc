@@ -202,7 +202,7 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "Ursa";
+		String release = "Venus";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
 		def i = 7; // the number of sprints
@@ -217,7 +217,7 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Titan";
+			release = "Ursa";
 			labelTemplate = "Commitment." + release;
 			i = 7;
 			while(i > 0)
@@ -232,9 +232,9 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Saturn";
+			release = "Titan";
 			labelTemplate = "Commitment." + release;
-			i = 6;
+			i = 7;
 			while(i > 0)
 			{
 				if(label.contains(labelTemplate + i))
@@ -257,7 +257,7 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Ursa";
+		String release = "Venus";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
 		def i = 7; // the number of sprints
@@ -272,7 +272,7 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Titan";
+			release = "Ursa";
 			sprintTemplate = release + "-Sprint-";
 			i = 7;
 			while(i > 0)
@@ -287,9 +287,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Saturn";
+			release = "Titan";
 			sprintTemplate = release + "-Sprint-";
-			i = 6;
+			i = 7;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
@@ -361,16 +361,16 @@ public class BlueprintHelper {
 		
 		def df = new SimpleDateFormat("dd.MM.yyy");
 		def holidays = [
-			df.parse("01.01.2019"), // New Year
-			df.parse("18.02.2019"), // Family Day
-			df.parse("19.04.2019"), // Good Friday
-			df.parse("20.05.2019"), // Victoria Day
-			df.parse("01.07.2019"), // Canada Day
+			df.parse("01.01.2020"), // New Year
+			df.parse("17.02.2020"), // Family Day
+			df.parse("10.04.2020"), // Good Friday
+			df.parse("18.05.2020"), // Victoria Day
+			df.parse("01.07.2020"), // Canada Day
 			df.parse("05.08.2019"), // Civic Holiday
 			df.parse("02.09.2019"), // Labour Day
-			df.parse("014.10.2019"), // Thanksgiving
+			df.parse("14.10.2019"), // Thanksgiving
 			df.parse("25.12.2019"), // Christmas Day
-			df.parse("28.12.2019"), // Boxing Day
+			df.parse("26.12.2019"), // Boxing Day
 		];
 		
 		changeHistoryManager.getChangeItemsForField(issue, "status").each {ChangeItemBean item ->
@@ -496,6 +496,43 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
 	}
 	
+	public def getVenusComponent(Issue issue) {
+		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
+		{
+			return null;
+		}
+		
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
+		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
+		
+		if(fieldValue == "Angular 8 Migration")
+		{
+			return "Angular 8 Migration";
+		}
+		else if(fieldValue == "Custom Property Backend")
+		{
+			return "Custom Property Backend";
+		}
+		else if(fieldValue == "Excel Export")
+		{
+			return "Excel Export";
+		}
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		{
+			return "R&D Bucket";
+		}
+		else if(fieldValue == "CICD")
+		{
+			return "CI/CD";
+		}
+		else if(fieldValue == "DevOps")
+		{
+			return "DevOps";
+		}
+		
+		return "Other";
+	}
+	
 	public def getUrsaComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
@@ -553,43 +590,6 @@ public class BlueprintHelper {
 		else if(fieldValue == "Doc Gen")
 		{
 			return "Doc Gen";
-		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
-		{
-			return "R&D Bucket";
-		}
-		else if(fieldValue == "CICD")
-		{
-			return "CI/CD";
-		}
-		else if(fieldValue == "DevOps")
-		{
-			return "DevOps";
-		}
-		
-		return "Other";
-	}
-	
-	public def getSaturnComponent(Issue issue) {
-		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
-		{
-			return null;
-		}
-		
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
-		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
-		
-		if(fieldValue == "Diagram Editor")
-		{
-			return "UME v3";
-		}
-		else if(fieldValue == "Reuse")
-		{
-			return "Reuse";
-		}
-		else if(fieldValue == "Drag & Drop")
-		{
-			return "Drag & Drop";
 		}
 		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
