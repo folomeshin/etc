@@ -369,8 +369,12 @@ public class BlueprintHelper {
 			df.parse("05.08.2019"), // Civic Holiday
 			df.parse("02.09.2019"), // Labour Day
 			df.parse("14.10.2019"), // Thanksgiving
+			df.parse("24.12.2019"), // Office Closed
 			df.parse("25.12.2019"), // Christmas Day
 			df.parse("26.12.2019"), // Boxing Day
+			df.parse("27.12.2019"), // Office Closed
+			df.parse("30.12.2019"), // Office Closed
+			df.parse("31.12.2019"), // Office Closed
 		];
 		
 		changeHistoryManager.getChangeItemsForField(issue, "status").each {ChangeItemBean item ->
