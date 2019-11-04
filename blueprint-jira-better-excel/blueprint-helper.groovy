@@ -511,11 +511,11 @@ public class BlueprintHelper {
 		
 		if(fieldValue == "Angular 8 Migration")
 		{
-			return "Angular 8 Migration";
+			return "Angular 8";
 		}
-		else if(fieldValue == "Custom Property Backend")
+		if(fieldValue == "Admin")
 		{
-			return "Custom Property Backend";
+			return "Admin";
 		}
 		else if(fieldValue == "Excel Export")
 		{
