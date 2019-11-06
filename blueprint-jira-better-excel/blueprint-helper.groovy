@@ -525,14 +525,6 @@ public class BlueprintHelper {
 		{
 			return "R&D Bucket";
 		}
-		else if(fieldValue == "CICD")
-		{
-			return "CI/CD";
-		}
-		else if(fieldValue == "DevOps")
-		{
-			return "DevOps";
-		}
 		
 		return "Other";
 	}
