@@ -202,7 +202,7 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "Venus";
+		String release = "Wavelength";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
 		def i = 7; // the number of sprints
@@ -214,6 +214,21 @@ public class BlueprintHelper {
 				break;
 			}
 			i--;
+		}
+		if(commitmentSprint == null)
+		{
+			release = "Venus";
+			labelTemplate = "Commitment." + release;
+			i = 7;
+			while(i > 0)
+			{
+				if(label.contains(labelTemplate + i))
+				{
+					commitmentSprint = release + i;
+					break;
+				}
+				i--;
+			}
 		}
 		if(commitmentSprint == null)
 		{
@@ -257,7 +272,7 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Venus";
+		String release = "Wavelength";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
 		def i = 7; // the number of sprints
@@ -269,6 +284,21 @@ public class BlueprintHelper {
 				break;
 			}
 			i--;
+		}
+		if(sprint == null)
+		{
+			release = "Venus";
+			sprintTemplate = release + "-Sprint-";
+			i = 7;
+			while(i > 0)
+			{
+				if(sprints.contains(sprintTemplate + i))
+				{
+					sprint = release + i;
+					break;
+				}
+				i--;
+			}
 		}
 		if(sprint == null)
 		{
@@ -366,9 +396,9 @@ public class BlueprintHelper {
 			df.parse("10.04.2020"), // Good Friday
 			df.parse("18.05.2020"), // Victoria Day
 			df.parse("01.07.2020"), // Canada Day
-			df.parse("05.08.2019"), // Civic Holiday
-			df.parse("02.09.2019"), // Labour Day
-			df.parse("14.10.2019"), // Thanksgiving
+			df.parse("03.08.2020"), // Civic Holiday
+			df.parse("07.09.2020"), // Labour Day
+			df.parse("12.10.2020"), // Thanksgiving
 			df.parse("24.12.2019"), // Office Closed
 			df.parse("25.12.2019"), // Christmas Day
 			df.parse("26.12.2019"), // Boxing Day
@@ -498,6 +528,35 @@ public class BlueprintHelper {
 	}
 	public def getTotalP0P1BugCount() {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
+	}
+	
+	public def getWavelengthComponent(Issue issue) {
+		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
+		{
+			return null;
+		}
+		
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
+		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
+		
+		if(fieldValue == "Visio Import/Export")
+		{
+			return "Visio Import";
+		}
+		if(fieldValue == "Logging and Audit")
+		{
+			return "BoA Audit";
+		}
+		if(fieldValue == "Admin")
+		{
+			return "Admin";
+		}
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		{
+			return "R&D Bucket";
+		}
+		
+		return "Other";
 	}
 	
 	public def getVenusComponent(Issue issue) {
