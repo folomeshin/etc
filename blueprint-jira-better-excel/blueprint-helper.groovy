@@ -543,6 +543,10 @@ public class BlueprintHelper {
 		{
 			return "Visio Import";
 		}
+		if(fieldValue == "UiPath Integration")
+		{
+			return "UiPath Integration";
+		}
 		if(fieldValue == "Logging and Audit")
 		{
 			return "BoA Audit";
