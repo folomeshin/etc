@@ -275,7 +275,7 @@ public class BlueprintHelper {
 		String release = "Wavelength";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 7; // the number of sprints
+		def i = 8; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
