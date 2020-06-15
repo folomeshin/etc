@@ -202,10 +202,10 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "Wavelength";
+		String release = "X-Ray";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
-		def i = 7; // the number of sprints
+		def i = 5; // the number of sprints
 		while(i > 0)
 		{
 			if(label.contains(labelTemplate + i))
@@ -217,39 +217,9 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Venus";
+			release = "Wavelength";
 			labelTemplate = "Commitment." + release;
-			i = 7;
-			while(i > 0)
-			{
-				if(label.contains(labelTemplate + i))
-				{
-					commitmentSprint = release + i;
-					break;
-				}
-				i--;
-			}
-		}
-		if(commitmentSprint == null)
-		{
-			release = "Ursa";
-			labelTemplate = "Commitment." + release;
-			i = 7;
-			while(i > 0)
-			{
-				if(label.contains(labelTemplate + i))
-				{
-					commitmentSprint = release + i;
-					break;
-				}
-				i--;
-			}
-		}
-		if(commitmentSprint == null)
-		{
-			release = "Titan";
-			labelTemplate = "Commitment." + release;
-			i = 7;
+			i = 8;
 			while(i > 0)
 			{
 				if(label.contains(labelTemplate + i))
@@ -272,10 +242,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Wavelength";
+		String release = "X-Ray";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 8; // the number of sprints
+		def i = 5; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -287,39 +257,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Venus";
+			release = "Wavelength";
 			sprintTemplate = release + "-Sprint-";
-			i = 7;
-			while(i > 0)
-			{
-				if(sprints.contains(sprintTemplate + i))
-				{
-					sprint = release + i;
-					break;
-				}
-				i--;
-			}
-		}
-		if(sprint == null)
-		{
-			release = "Ursa";
-			sprintTemplate = release + "-Sprint-";
-			i = 7;
-			while(i > 0)
-			{
-				if(sprints.contains(sprintTemplate + i))
-				{
-					sprint = release + i;
-					break;
-				}
-				i--;
-			}
-		}
-		if(sprint == null)
-		{
-			release = "Titan";
-			sprintTemplate = release + "-Sprint-";
-			i = 7;
+			i = 8;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
@@ -399,12 +339,6 @@ public class BlueprintHelper {
 			df.parse("03.08.2020"), // Civic Holiday
 			df.parse("07.09.2020"), // Labour Day
 			df.parse("12.10.2020"), // Thanksgiving
-			df.parse("24.12.2019"), // Office Closed
-			df.parse("25.12.2019"), // Christmas Day
-			df.parse("26.12.2019"), // Boxing Day
-			df.parse("27.12.2019"), // Office Closed
-			df.parse("30.12.2019"), // Office Closed
-			df.parse("31.12.2019"), // Office Closed
 		];
 		
 		changeHistoryManager.getChangeItemsForField(issue, "status").each {ChangeItemBean item ->
@@ -530,6 +464,39 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
 	}
 	
+	public def getXRayComponent(Issue issue) {
+		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
+		{
+			return null;
+		}
+		
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
+		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
+		
+		if(fieldValue == "BluePrism Integration")
+		{
+			return "Blue Prism Integration";
+		}
+		if(fieldValue == "Automation Anywhere Integration")
+		{
+			return "Automation Anywhere Integration";
+		}
+		if(fieldValue == "Microsoft Power Automate Integration")
+		{
+			return "MS Power Automate Integration";
+		}
+		if(fieldValue == "Admin")
+		{
+			return "Admin";
+		}
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		{
+			return "R&D Bucket";
+		}
+		
+		return "Other";
+	}
+	
 	public def getWavelengthComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
@@ -558,109 +525,6 @@ public class BlueprintHelper {
 		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
 			return "R&D Bucket";
-		}
-		
-		return "Other";
-	}
-	
-	public def getVenusComponent(Issue issue) {
-		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
-		{
-			return null;
-		}
-		
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
-		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
-		
-		if(fieldValue == "Angular 8 Migration")
-		{
-			return "Angular 8";
-		}
-		if(fieldValue == "Admin")
-		{
-			return "Admin";
-		}
-		else if(fieldValue == "Excel Export")
-		{
-			return "Excel Export";
-		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
-		{
-			return "R&D Bucket";
-		}
-		
-		return "Other";
-	}
-	
-	public def getUrsaComponent(Issue issue) {
-		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
-		{
-			return null;
-		}
-		
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
-		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
-		
-		if(fieldValue == "Version Compare")
-		{
-			return "Version Compare";
-		}
-		else if(fieldValue == "Traces")
-		{
-			return "Traces";
-		}
-		else if(fieldValue == "Process Artifact")
-		{
-			return "Process Improvements";
-		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
-		{
-			return "R&D Bucket";
-		}
-		else if(fieldValue == "CICD")
-		{
-			return "CI/CD";
-		}
-		else if(fieldValue == "DevOps")
-		{
-			return "DevOps";
-		}
-		
-		return "Other";
-	}
-	
-	public def getTitanComponent(Issue issue) {
-		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
-		{
-			return null;
-		}
-		
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
-		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
-		
-		if(fieldValue == "Glossary")
-		{
-			return "Glossary";
-		}
-		else if(fieldValue == "Reuse")
-		{
-			return "Reuse";
-		}
-		else if(fieldValue == "Doc Gen")
-		{
-			return "Doc Gen";
-		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
-		{
-			return "R&D Bucket";
-		}
-		else if(fieldValue == "CICD")
-		{
-			return "CI/CD";
-		}
-		else if(fieldValue == "DevOps")
-		{
-			return "DevOps";
 		}
 		
 		return "Other";
