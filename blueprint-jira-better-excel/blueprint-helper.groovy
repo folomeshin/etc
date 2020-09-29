@@ -202,10 +202,10 @@ public class BlueprintHelper {
 		}
 		
 		String commitmentSprint = null;
-		String release = "X-Ray";
+		String release = "Austn";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
-		def i = 6; // the number of sprints
+		def i = 5; // the number of sprints
 		while(i > 0)
 		{
 			if(label.contains(labelTemplate + i))
@@ -217,9 +217,9 @@ public class BlueprintHelper {
 		}
 		if(commitmentSprint == null)
 		{
-			release = "Wavelength";
+			release = "X-Ray";
 			labelTemplate = "Commitment." + release;
-			i = 8;
+			i = 6;
 			while(i > 0)
 			{
 				if(label.contains(labelTemplate + i))
@@ -242,10 +242,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "X-Ray";
+		String release = "Austin";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 6; // the number of sprints
+		def i = 5; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -257,9 +257,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Wavelength";
+			release = "X-Ray";
 			sprintTemplate = release + "-Sprint-";
-			i = 8;
+			i = 6;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
@@ -276,7 +276,7 @@ public class BlueprintHelper {
 	
 	public def getLastSprintLabel(Issue issue)
 	{
-		return getLastSprint(issue)?.replace("aturn", "")?.replace("ocket", "");
+		return getLastSprint(issue)?.replace("ustin", "")?.replace("-ray", "");
 	}
 	
 	
@@ -464,6 +464,43 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
 	}
 	
+	public def getAustinComponent(Issue issue) {
+		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
+		{
+			return null;
+		}
+		
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
+		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
+		
+		if(fieldValue == "Process Artifact")
+		{
+			return "Process Artifact";
+		}
+		if(fieldValue == "FortressIQ Integration")
+		{
+			return "FortressIQ Integration";
+		}
+		if(fieldValue == "In Product Analytics")
+		{
+			return "In Product Analytics";
+		}
+		if(fieldValue == "Impact Analysis")
+		{
+			return "Impact Analysis";
+		}
+		if(fieldValue == "Admin")
+		{
+			return "Admin";
+		}
+		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		{
+			return "R&D Bucket";
+		}
+		
+		return "Other";
+	}
+	
 	public def getXRayComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
@@ -484,39 +521,6 @@ public class BlueprintHelper {
 		if(fieldValue == "Microsoft Power Automate Integration")
 		{
 			return "MS Power Automate Integration";
-		}
-		if(fieldValue == "Admin")
-		{
-			return "Admin";
-		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
-		{
-			return "R&D Bucket";
-		}
-		
-		return "Other";
-	}
-	
-	public def getWavelengthComponent(Issue issue) {
-		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
-		{
-			return null;
-		}
-		
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
-		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
-		
-		if(fieldValue == "Visio Import/Export")
-		{
-			return "Visio Import";
-		}
-		if(fieldValue == "UiPath Integration")
-		{
-			return "UiPath Integration";
-		}
-		if(fieldValue == "Logging and Audit")
-		{
-			return "BoA Audit";
 		}
 		if(fieldValue == "Admin")
 		{
