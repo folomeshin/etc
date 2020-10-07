@@ -245,7 +245,7 @@ public class BlueprintHelper {
 		String release = "Austin";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 5; // the number of sprints
+		def i = 6; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
