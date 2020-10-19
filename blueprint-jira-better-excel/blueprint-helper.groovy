@@ -297,6 +297,26 @@ public class BlueprintHelper {
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, true);
 	}
 	
+	public def isStoryDecopmosed(Issue issue)
+	{
+		if(!(issue.issueType.name.toLowerCase() in ["story", "spike"]))
+		{
+			return null;
+		}
+		
+		def status = issue?.statusObject?.name?.toLowerCase();
+		if(issue.issueType.name.toLowerCase() in ["spike"])
+		{
+			return !(status in ["spike: cancel"]) ? "Yes" : "No";
+		}
+		else if(issue.issueType.name.toLowerCase() in ["story"])
+		{
+			return !(status in ["story: cancelled", "story: decomposition", "story: new", "story: pm review", "story: qa review", "story: review"]) ? "Yes" : "No";
+		}
+		
+		return null;
+	}
+	
 	public def getReadyForValidationTime(Issue issue)
 	{
 		if(!(issue.issueType.name.toLowerCase() in ["story", "tech debt"]))
