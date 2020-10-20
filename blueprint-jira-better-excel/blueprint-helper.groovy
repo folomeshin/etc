@@ -427,7 +427,7 @@ public class BlueprintHelper {
 			"tech debt: in development", "tech debt: in development - on hold",
 			"devops: in progress",
 			"bug: in development", "bug: in development - on hold"];
-		def validationStatuses = ["epic: demo",
+		def validationStatuses = ["epic: in validation",
 			"story: ready for validation", "story: validation", "story: validation - on hold", "story: demo checkpoint", "story: demo checkpoint - on hold",
 			"tech debt: ready for validation", "tech debt: validation", "tech debt: validation - on hold", "tech debt: demo checkpoint", "tech debt: demo checkpoint - on hold",
 			"bug: validation", "bug: validation - on hold"];
