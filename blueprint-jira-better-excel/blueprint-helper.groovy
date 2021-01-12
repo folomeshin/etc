@@ -205,7 +205,7 @@ public class BlueprintHelper {
 		String release = "Austn";
 		def labelTemplate = "Commitment." + release;
 		def label = getLabels(issue);
-		def i = 5; // the number of sprints
+		def i = 9; // the number of sprints
 		while(i > 0)
 		{
 			if(label.contains(labelTemplate + i))
@@ -245,7 +245,7 @@ public class BlueprintHelper {
 		String release = "Austin";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 6; // the number of sprints
+		def i = 9; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -493,60 +493,69 @@ public class BlueprintHelper {
 		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
 		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
 		
-		if(fieldValue == "Process Artifact")
-		{
-			return "Process Artifact";
-		}
-		if(fieldValue == "FortressIQ Integration")
-		{
-			return "FortressIQ Integration";
-		}
-		if(fieldValue == "In Product Analytics")
-		{
-			return "In Product Analytics";
-		}
-		if(fieldValue == "Impact Analysis")
-		{
-			return "Impact Analysis";
-		}
-		if(fieldValue == "Admin")
-		{
-			return "Admin";
-		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
-		{
-			return "R&D Bucket";
-		}
+		def customFieldRelease = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Active in Release #");
+		def fieldValueRelease = issue.getCustomFieldValue(customFieldRelease)?.toString();
 		
-		return "Other";
-	}
-	
-	public def getXRayComponent(Issue issue) {
-		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
+		if(fieldValue == "Labs" && fieldValueRelease == "11.4")
 		{
-			return null;
+			return "AA Migration Demo PoC";
 		}
-		
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
-		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
-		
-		if(fieldValue == "BluePrism Integration")
+		if(fieldValue == "Licensing" && fieldValueRelease == "11.4")
 		{
-			return "Blue Prism Integration";
+			return "Digital Blueprint Licensing";
 		}
-		if(fieldValue == "Automation Anywhere Integration")
+		if(fieldValue == "Impact Analysis" && fieldValueRelease == "11.4")
 		{
-			return "Automation Anywhere Integration";
+			return "New Impact Analysis";
 		}
-		if(fieldValue == "Microsoft Power Automate Integration")
+		if(fieldValue == "Admin - Project Management" && fieldValueRelease == "11.4")
 		{
-			return "MS Power Automate Integration";
+			return "Import/Export Projects MVP";
 		}
-		if(fieldValue == "Admin")
+		if(fieldValue == "Admin - Advanced Settings" && fieldValueRelease == "11.4")
 		{
-			return "Admin";
+			return "AD and FA Settings";
 		}
-		else if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		if(fieldValue == "Admin - Advanced Settings" && fieldValueRelease == "12.0")
+		{
+			return "Instance Security Settings";
+		}
+		if(fieldValue == "Admin - Artifact Management" && fieldValueRelease == "12.0")
+		{
+			return "Convert Custom Properties to Standard";
+		}
+		if(fieldValue == "Installer" && fieldValueRelease == "11.4")
+		{
+			return "Pre-Loaded Instance Configuration";
+		}
+		if(fieldValue == "UiPath Integration" && fieldValueRelease == "12.0")
+		{
+			return "Reversing UiPath V1";
+		}
+		if(fieldValue == "BluePrism Integration" && fieldValueRelease == "12.0")
+		{
+			def epicKeyField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Epic Link");
+			def epicKeyValue = (String) issue.getCustomFieldValue(epicKeyField);
+			
+			return epicKeyValue == "STOR-24465" ? "CapGem PoC" : "Reversing Blue Prism V1";
+		}
+		if(fieldValue == "Automation Anywhere Integration" && fieldValueRelease == "12.0")
+		{
+			return "Reversing Automation Anywhere v11 V1";
+		}
+		if(fieldValue == "Doc Gen" && fieldValueRelease == "12.0")
+		{
+			return "Upgrade to Windward v20";
+		}
+		if(fieldValue == "Tech Improvements" && fieldValueRelease == "11.4")
+		{
+			return "Dropping SQL Server 2012";
+		}
+		if(fieldValue == "Tech Improvements" && fieldValueRelease == "12.0")
+		{
+			return "Edge Support";
+		}
+		if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
 			return "R&D Bucket";
 		}
