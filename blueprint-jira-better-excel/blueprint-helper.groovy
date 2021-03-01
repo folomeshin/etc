@@ -242,7 +242,7 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Austin";
+		String release = "Belarus";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
 		def i = 9; // the number of sprints
@@ -257,9 +257,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "X-Ray";
+			release = "Austin";
 			sprintTemplate = release + "-Sprint-";
-			i = 6;
+			i = 9;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
@@ -351,14 +351,18 @@ public class BlueprintHelper {
 		
 		def df = new SimpleDateFormat("dd.MM.yyy");
 		def holidays = [
-			df.parse("01.01.2020"), // New Year
-			df.parse("17.02.2020"), // Family Day
-			df.parse("10.04.2020"), // Good Friday
-			df.parse("18.05.2020"), // Victoria Day
-			df.parse("01.07.2020"), // Canada Day
-			df.parse("03.08.2020"), // Civic Holiday
-			df.parse("07.09.2020"), // Labour Day
-			df.parse("12.10.2020"), // Thanksgiving
+			df.parse("30.12.2020"), // Office Holiday
+			df.parse("31.12.2020"), // Office Holiday
+			df.parse("01.01.2021"), // New Year
+			df.parse("15.02.2021"), // Family Day
+			df.parse("02.04.2021"), // Good Friday
+			df.parse("24.05.2021"), // Victoria Day
+			df.parse("01.07.2021"), // Canada Day
+			df.parse("02.08.2021"), // Civic Holiday
+			df.parse("06.09.2021"), // Labour Day
+			df.parse("11.10.2021"), // Thanksgiving
+			df.parse("27.12.2021"), // Christmas Day
+			df.parse("28.12.2021"), // Boxing Day
 		];
 		
 		changeHistoryManager.getChangeItemsForField(issue, "status").each {ChangeItemBean item ->
@@ -484,7 +488,7 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
 	}
 	
-	public def getAustinComponent(Issue issue) {
+	public def getReleaseComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
 			return null;
@@ -496,65 +500,85 @@ public class BlueprintHelper {
 		def customFieldRelease = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Active in Release #");
 		def fieldValueRelease = issue.getCustomFieldValue(customFieldRelease)?.toString();
 		
-		if(fieldValue == "Labs" && fieldValueRelease == "11.4")
+		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Epic Link");
+		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
+		// 12.2
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25080")
 		{
-			return "AA Migration Demo PoC";
+			return "UX Enhancements for 12.2";
 		}
-		if(fieldValue == "Licensing" && fieldValueRelease == "11.4")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25192")
 		{
-			return "Digital Blueprint Licensing";
+			return "Investigate Upgrade to Latest Windward";
 		}
-		if(fieldValue == "Impact Analysis" && fieldValueRelease == "11.4")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25081")
 		{
-			return "New Impact Analysis";
+			return "Reversing AA v11: Clean Up Import";
 		}
-		if(fieldValue == "Admin - Project Management" && fieldValueRelease == "11.4")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25251")
 		{
-			return "Import/Export Projects MVP";
+			return "Add Username to Pendo Visitor Name";
 		}
-		if(fieldValue == "Admin - Advanced Settings" && fieldValueRelease == "11.4")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25249")
 		{
-			return "AD and FA Settings";
+			return "Toggle - Deleting DGB Doesn't Free License";
 		}
-		if(fieldValue == "Admin - Advanced Settings" && fieldValueRelease == "12.0")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25084")
 		{
-			return "Instance Security Settings";
+			return "Import AA v11 into COM";
 		}
-		if(fieldValue == "Admin - Artifact Management" && fieldValueRelease == "12.0")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25083")
 		{
-			return "Convert Custom Properties to Standard";
+			return "Import UiPath into COM";
 		}
-		if(fieldValue == "Installer" && fieldValueRelease == "11.4")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25085")
 		{
-			return "Pre-Loaded Instance Configuration";
+			return "Export COM to Blue Prism";
 		}
-		if(fieldValue == "UiPath Integration" && fieldValueRelease == "12.0")
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25087")
+		{
+			return "Populate COM with DGB Actions";
+		}
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25086")
+		{
+			return "COM Mapping for Most-Used Application Types";
+		}
+		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-24654")
+		{
+			return "Import from Word MVP";
+		}
+		// 12.1
+		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24653")
+		{
+			return "Common Object Model for RPA";
+		}
+		
+		if(fieldValueRelease == "12.1" && fieldValueEpicLink in ["STOR-24753", "STOR-24889"])
+		{
+			return "UX Overhaul Tech Design";
+		}
+		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24465")
+		{
+			return "[POC] [Capgem] - UiPath to Blue Prism Converter (Not Synced)";
+		}
+		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24794")
+		{
+			return "AA11 to BP6.8 Converter MVP (Not Synced)";
+		}
+		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-25061")
+		{
+			return "Reversing Automation Anywhere v11 V2: ZIP/AAPKG Import & Project Structure";
+		}
+		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24163")
+		{
+			return "Excel Update MVP";
+		}
+		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-25052")
 		{
 			return "Reversing UiPath V1";
 		}
-		if(fieldValue == "BluePrism Integration" && fieldValueRelease == "12.0")
-		{
-			def epicKeyField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Epic Link");
-			def epicKeyValue = (String) issue.getCustomFieldValue(epicKeyField);
-			
-			return epicKeyValue == "STOR-24465" ? "CapGem PoC" : "Reversing Blue Prism V1";
-		}
-		if(fieldValue == "Automation Anywhere Integration" && fieldValueRelease == "12.0")
-		{
-			return "Reversing Automation Anywhere v11 V1";
-		}
-		if(fieldValue == "Doc Gen" && fieldValueRelease == "12.0")
-		{
-			return "Upgrade to Windward v20";
-		}
-		if(fieldValue == "Tech Improvements" && fieldValueRelease == "11.4")
-		{
-			return "Dropping SQL Server 2012";
-		}
-		if(fieldValue == "Tech Improvements" && fieldValueRelease == "12.0")
-		{
-			return "Edge Support";
-		}
+	
+		// R&D Bucket
 		if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
 			return "R&D Bucket";
