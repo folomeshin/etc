@@ -8,9 +8,6 @@ import com.atlassian.jira.issue.CustomFieldManager;
 import com.atlassian.jira.issue.history.ChangeItemBean;
 import java.text.*;
 
-//filename = "Pegasus Release Planning - ${new Date().format('yyyy-MM-dd')}.xlsx".toString()
-filename = "Pegasus Release Planning - ${new Date().format("yyyy-MM-dd-HH-mm-ss-z", TimeZone.getTimeZone('EST'))}.xlsx".toString();
-
 bpHelper = new BlueprintHelper();
 //issues = bpHelper.searchIssues('project = Storyteller AND issuetype in (Epic, Story, Spike, "Tech Debt", Bug) AND fixVersion in (Pegasus, Quasar) AND status not in ("Epic: Cancelled", "Story: Cancelled", "Tech Debt: Cancelled") AND NOT (issuetype = Epic AND (ST:Components = DevOps OR Team = TechComm))');
 
@@ -28,7 +25,7 @@ public class BlueprintHelper {
 		if (parseResult.isValid()) {
 
 			def searchResult = searchService.search(user, parseResult.getQuery(), PagerFilter.getUnlimitedFilter());
-			return searchResult.issues
+			return searchResult.results;
 		} 
 		else { 
 			// Log errors if invalid JQL is used so we can fix it
@@ -38,9 +35,9 @@ public class BlueprintHelper {
 	}
 	
 	public String getCollectionField(Issue issue, String name) {
-		def field = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName(name);
+		def field = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName(name)[0];
 		def fieldValue = issue.getCustomFieldValue(field);
-		return fieldValue?.collect { it.name }?.join(',');
+		return fieldValue?.collect { it.toString() }?.join(',');
 	}
 	
 	public String getLabels(Issue issue) {
@@ -49,7 +46,7 @@ public class BlueprintHelper {
 	}
 	
 	public Double getEpicProgress(Issue issue) {
-		def fieldEpicProgress = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Epic Progress");
+		def fieldEpicProgress = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Progress")[0];
 		String fiedValue = issue.getCustomFieldValue(fieldEpicProgress);
 		def percent = fiedValue?.replaceAll("<(.|\n)*?>|%", '')
 		
@@ -57,13 +54,13 @@ public class BlueprintHelper {
 	}
 	
 	public def getEpicLinkKey(Issue issue) {
-		def field = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Epic Link");
+		def field = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def value = issue.getCustomFieldValue(field);
 		return value;
 	}
 	
 
-	public def getAggregates(Issue issue) {
+	public AggregateTimeTrackingBean getAggregates(Issue issue) {
 		def timeTrackingCalculatorFactory = ComponentAccessor.getOSGiComponentInstanceOfType(AggregateTimeTrackingCalculatorFactory.class)
 		def calculator = timeTrackingCalculatorFactory.getCalculator(issue);
 		return calculator.getAggregates(issue);
@@ -102,7 +99,7 @@ public class BlueprintHelper {
 
 		Double decomposedSP = 0;
 
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Story Points");
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Story Points")[0];
 
 		issueLinkManager.getOutwardLinks(issue.id)?.each {issueLink ->
 			if (issueLink.issueLinkType.name == "Epic-Story Link" && 
@@ -129,7 +126,7 @@ public class BlueprintHelper {
 
 		Double readySP = 0;
 
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Story Points");
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Story Points")[0];
 
 		issueLinkManager.getOutwardLinks(issue.id)?.each {issueLink ->
 			if (issueLink.issueLinkType.name == "Epic-Story Link" && 
@@ -156,7 +153,7 @@ public class BlueprintHelper {
 
 		Double readySP = 0;
 
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Story Points");
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Story Points")[0];
 
 		issueLinkManager.getOutwardLinks(issue.id)?.each {issueLink ->
 			if (issueLink.issueLinkType.name == "Epic-Story Link" && 
@@ -180,7 +177,7 @@ public class BlueprintHelper {
 
 		Double readySP = 0;
 
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Story Points");
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Story Points")[0];
 
 		issueLinkManager.getOutwardLinks(issue.id)?.each {issueLink ->
 			if (issueLink.issueLinkType.name == "Epic-Story Link" && 
@@ -194,7 +191,7 @@ public class BlueprintHelper {
 		return readySP == 0 ? null : readySP;
 	}
 	
-	public def getLastCommitmentSprint(Issue issue)
+	public String getLastCommitmentSprint(Issue issue)
 	{
 		if(!(issue.issueType.name in ["Story", "Spike", "Tech Debt", "DevOps", "Bug"]))
 		{
@@ -234,7 +231,7 @@ public class BlueprintHelper {
 		return commitmentSprint;
 	}
 	
-	public def getLastSprint(Issue issue)
+	public String getLastSprint(Issue issue)
 	{
 		if(!(issue.issueType.name in ["Story", "Spike", "Tech Debt", "DevOps", "Bug"]))
 		{
@@ -304,7 +301,7 @@ public class BlueprintHelper {
 			return null;
 		}
 		
-		def status = issue?.statusObject?.name?.toLowerCase();
+		def status = issue?.status?.name?.toLowerCase();
 		if(issue.issueType.name.toLowerCase() in ["spike"])
 		{
 			return !(status in ["spike: cancel"]) ? "Yes" : "No";
@@ -337,7 +334,7 @@ public class BlueprintHelper {
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, false) - 1;
 	}
 	
-	public def getTimeBetweenStates(Issue issue, def startStatuses, def endStatuses, boolean isStartStatusFirst)
+	public int getTimeBetweenStates(Issue issue, def startStatuses, def endStatuses, boolean isStartStatusFirst)
 	{	
 		def changeHistoryManager = ComponentAccessor.getChangeHistoryManager()
 
@@ -415,7 +412,7 @@ public class BlueprintHelper {
 	
 	// The state is just a grouping of the status
 	public String getState(Issue issue) {
-		def status = issue?.statusObject?.name?.toLowerCase();
+		def status = issue?.status?.name?.toLowerCase();
 		if(status == null)
 		{
 			return null;
@@ -469,7 +466,7 @@ public class BlueprintHelper {
 	public def isInBacklogHealth(Issue issue)
 	{
 		def type = issue?.issueType?.name?.toLowerCase();
-		def status = issue?.statusObject?.name?.toLowerCase();
+		def status = issue?.status?.name?.toLowerCase();
 		if((status in ["story: ready", "tech debt: ready", "devops: ready"])
 			|| (type == "spike" && status == "story: new"))
 			return "Yes";
@@ -494,13 +491,13 @@ public class BlueprintHelper {
 			return null;
 		}
 		
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("ST:Components");
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("ST:Components")[0];
 		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
 		
-		def customFieldRelease = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Active in Release #");
+		def customFieldRelease = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Active in Release #")[0];
 		def fieldValueRelease = issue.getCustomFieldValue(customFieldRelease)?.toString();
 		
-		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("Epic Link");
+		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
 		// 12.2
 		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25080")
@@ -592,7 +589,7 @@ public class BlueprintHelper {
 			return null;
 		}
 
-		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectByName("DevOps Task Type");
+		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("DevOps Task Type")[0];
 		return issue.getCustomFieldValue(customField);
 	}
 	
