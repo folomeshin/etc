@@ -500,45 +500,54 @@ public class BlueprintHelper {
 		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
 		// 12.3
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25566")
+		/*if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25566")
 		{
 			return "Export COM to UiPath";
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25283")
+		}*/
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25283") //
 		{
 			return "COM Parameter Editor";
 		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25567")
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25567") //
 		{
-			return "Import Wizard (aka. Selective Import) - UiPath, Blue Prism";
+			return "Import Wizard - Blue Prism"; // Import Wizard (aka. Selective Import) - UiPath, Blue Prism
 		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25618")
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25805") //
+		{
+			return "Import Wizard - UiPath"; // NEW
+		}
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25618") //
 		{
 			return "Intelligent Processes";
 		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25617")
+		/*if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25617")
 		{
 			return "RPA Variables";
 		}
 		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25522")
 		{
 			return "Update UiPath import with/without templates";
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25660")
+		}*/
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25660") //
 		{
 			return "RPA Metrics Dashboard";
 		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25479")
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25479") //
 		{
 			return "UX Enhancements for 12.3";
 		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25636")
+		/*if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25636")
 		{
 			return "Import Blue Prism into COM";
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25671")
+		}*/
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25671") //
 		{
-			return "Applications in Impact";
+			return "Applications Reporting Dashboard"; // Applications in Impact
+		}
+		
+		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25806") //
+		{
+			return "RPA Variables"; // NEW
 		}
 		// 12.2
 		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25080")
