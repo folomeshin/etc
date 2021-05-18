@@ -552,7 +552,7 @@ public class BlueprintHelper {
 		// 12.2
 		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25080")
 		{
-			return "UX Enhancements for 12.2";
+			return "UX Enhancements for 12.3";
 		}
 		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25192")
 		{
