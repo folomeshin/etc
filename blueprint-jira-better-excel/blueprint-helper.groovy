@@ -505,6 +505,7 @@ public class BlueprintHelper {
 			|| fieldValueEpicLink == "STOR-26424"
 			|| fieldValueEpicLink == "STOR-26423"
 			|| fieldValueEpicLink == "STOR-26428"
+			|| fieldValueEpicLink == "STOR-26425"
 			|| fieldValueEpicLink == "STOR-26426"
 			|| fieldValueEpicLink == "STOR-26427"
 			|| fieldValueEpicLink == "STOR-26429")) //
@@ -538,6 +539,10 @@ public class BlueprintHelper {
 		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26042") //
 		{
 			return "Import AA Variables  to COM";
+		}
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25782") //
+		{
+			return "[AT&T] AA v11 to Power Automate";
 		}
 		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26431") //
 		{
