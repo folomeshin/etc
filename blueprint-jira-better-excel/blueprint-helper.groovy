@@ -494,13 +494,14 @@ public class BlueprintHelper {
 		def customField = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("ST:Components")[0];
 		def fieldValue = issue.getCustomFieldValue(customField)?.toString();
 		
-		def customFieldRelease = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Active in Release #")[0];
-		def fieldValueRelease = issue.getCustomFieldValue(customFieldRelease)?.toString();
+		// def customFieldRelease = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("????")[0];
+		// def fieldValueRelease = issue.getCustomFieldValue(customFieldRelease)?.toString();
+		def fieldValueRelease = issue.fixVersions.any() ? issue.fixVersions[0].toString() : "";
 		
 		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
 		// 12.4
-		if(fieldValueRelease == "12.4" && (fieldValueEpicLink == "STOR-26152"
+		if(fieldValueRelease == "Canada (12.4)" && (fieldValueEpicLink == "STOR-26152"
 			|| fieldValueEpicLink == "STOR-26424"
 			|| fieldValueEpicLink == "STOR-26423"
 			|| fieldValueEpicLink == "STOR-26428"
@@ -510,35 +511,35 @@ public class BlueprintHelper {
 		{
 			return "PAD Integration";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25570") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25570") //
 		{
 			return "[BNYM] Only Sync Artifacts when Approved";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25567") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25567") //
 		{
 			return "Import Wizard - Blue Prism";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25805") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25805") //
 		{
 			return "Import Wizard - UiPath";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25671") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25671") //
 		{
 			return "Applications Dashboard";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26136") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26136") //
 		{
 			return "Quality Dashboard v2: Risk Rating";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26142") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26142") //
 		{
 			return "UX Enhancements for 12.4 [BE & FE]";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26042") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26042") //
 		{
 			return "Import AA Variables  to COM";
 		}
-		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26431") //
+		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26431") //
 		{
 			return "Export COM to UiPath";
 		}
