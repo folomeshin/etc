@@ -499,6 +499,51 @@ public class BlueprintHelper {
 		
 		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
+		// 12.4
+		if(fieldValueRelease == "12.4" && (fieldValueEpicLink == "STOR-26152"
+			|| fieldValueEpicLink == "STOR-26424"
+			|| fieldValueEpicLink == "STOR-26423"
+			|| fieldValueEpicLink == "STOR-26428"
+			|| fieldValueEpicLink == "STOR-26426"
+			|| fieldValueEpicLink == "STOR-26427"
+			|| fieldValueEpicLink == "STOR-26429")) //
+		{
+			return "PAD Integration";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25570") //
+		{
+			return "[BNYM] Only Sync Artifacts when Approved";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25567") //
+		{
+			return "Import Wizard - Blue Prism";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25805") //
+		{
+			return "Import Wizard - UiPath";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-25671") //
+		{
+			return "Applications Dashboard";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26136") //
+		{
+			return "Quality Dashboard v2: Risk Rating";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26142") //
+		{
+			return "UX Enhancements for 12.4 [BE & FE]";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26042") //
+		{
+			return "Import AA Variables  to COM";
+		}
+		if(fieldValueRelease == "12.4" && fieldValueEpicLink == "STOR-26431") //
+		{
+			return "Export COM to UiPath";
+		}
+		
+		
 		// 12.3
 		/*if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25566")
 		{
