@@ -239,10 +239,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Belarus";
+		String release = "Dublin (12.5)";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 9; // the number of sprints
+		def i = 3; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -254,9 +254,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Austin";
+			release = "Canada (12.4)";
 			sprintTemplate = release + "-Sprint-";
-			i = 9;
+			i = 3;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
