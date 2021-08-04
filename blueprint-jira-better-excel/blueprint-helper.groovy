@@ -239,10 +239,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Dublin (12.5)";
+		String release = "Dublin";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 3; // the number of sprints
+		def i = 4; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -273,7 +273,7 @@ public class BlueprintHelper {
 	
 	public def getLastSprintLabel(Issue issue)
 	{
-		return getLastSprint(issue)?.replace("ustin", "")?.replace("-ray", "");
+		return getLastSprint(issue)?.replace("ublin (12.5)", "")?.replace("anada (12.4)", "");
 	}
 	
 	
@@ -293,7 +293,7 @@ public class BlueprintHelper {
 		def endStatuses = ["story: ready for validation", "tech debt: ready for validation", "devops: done"];
 		return getTimeBetweenStates(issue, startStatuses, endStatuses, true);
 	}
-	
+
 	public def isStoryDecopmosed(Issue issue)
 	{
 		if(!(issue.issueType.name.toLowerCase() in ["story", "spike"]))
@@ -500,18 +500,66 @@ public class BlueprintHelper {
 		
 		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
-		// 12.4
-		if(fieldValueRelease == "Canada (12.4)" && (fieldValueEpicLink == "STOR-26152"
-			|| fieldValueEpicLink == "STOR-26424"
-			|| fieldValueEpicLink == "STOR-26423"
-			|| fieldValueEpicLink == "STOR-26428"
-			|| fieldValueEpicLink == "STOR-26425"
-			|| fieldValueEpicLink == "STOR-26426"
-			|| fieldValueEpicLink == "STOR-26427"
-			|| fieldValueEpicLink == "STOR-26429")) //
+		
+		// Dublin
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26869") //
 		{
-			return "PAD Integration";
+			return "AT&T Migration: AAv11 to PAD";
 		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26668") //
+		{
+			return "RPA Export Wizard";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-25566") //
+		{
+			return "Export COM to UiPath: Mapping";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26847") //
+		{
+			return "Export COM to UiPath";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26900") //
+		{
+			return "Import from RPA Enhancements";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-25192") //
+		{
+			return "Investigate Upgrade to Latest Windward";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26261") //
+		{
+			return "[BNYM][API] Create Projects with Artifact Content";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27070") //
+		{
+			return "[BNYM] OSAWA v2";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27082") //
+		{
+			return "[SoNY] Doc Gen: System Step Screenshots";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27344") //
+		{
+			return "[BNYM] Default Reporter Property";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27318") //
+		{
+			return "[Ford] 12.5 Visio Import Enhancements";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27347") //
+		{
+			return "[AT&T] Import-Export Reporting v1";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27366") //
+		{
+			return "Quality Dash: Fix Applications Coverage %";
+		}
+		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26672") //
+		{
+			return "Dublin UX Enhancements";
+		}
+		
+		// Canada
 		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25570") //
 		{
 			return "[BNYM] Only Sync Artifacts when Approved";
@@ -549,133 +597,6 @@ public class BlueprintHelper {
 			return "Export COM to UiPath";
 		}
 		
-		
-		// 12.3
-		/*if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25566")
-		{
-			return "Export COM to UiPath";
-		}*/
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25283") //
-		{
-			return "COM Parameter Editor";
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25567") //
-		{
-			return "Import Wizard - Blue Prism"; // Import Wizard (aka. Selective Import) - UiPath, Blue Prism
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25805") //
-		{
-			return "Import Wizard - UiPath"; // NEW
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25618") //
-		{
-			return "Intelligent Processes";
-		}
-		/*if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25617")
-		{
-			return "RPA Variables";
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25522")
-		{
-			return "Update UiPath import with/without templates";
-		}*/
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25660") //
-		{
-			return "RPA Metrics Dashboard";
-		}
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25479") //
-		{
-			return "UX Enhancements for 12.3";
-		}
-		/*if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25636")
-		{
-			return "Import Blue Prism into COM";
-		}*/
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25671") //
-		{
-			return "Applications Reporting Dashboard"; // Applications in Impact
-		}
-		
-		if(fieldValueRelease == "12.3" && fieldValueEpicLink == "STOR-25806") //
-		{
-			return "RPA Variables"; // NEW
-		}
-		// 12.2
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25080")
-		{
-			return "UX Enhancements for 12.3";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25192")
-		{
-			return "Investigate Upgrade to Latest Windward";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25081")
-		{
-			return "Reversing AA v11: Clean Up Import";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25251")
-		{
-			return "Add Username to Pendo Visitor Name";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25249")
-		{
-			return "Toggle - Deleting DGB Doesn't Free License";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25084")
-		{
-			return "Import AA v11 into COM";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25083")
-		{
-			return "Import UiPath into COM";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25085")
-		{
-			return "Export COM to Blue Prism";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25087")
-		{
-			return "Populate COM with DGB Actions";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-25086")
-		{
-			return "COM Mapping for Most-Used Application Types";
-		}
-		if(fieldValueRelease == "12.2" && fieldValueEpicLink == "STOR-24654")
-		{
-			return "Import from Word MVP";
-		}
-		// 12.1
-		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24653")
-		{
-			return "Common Object Model for RPA";
-		}
-		
-		if(fieldValueRelease == "12.1" && fieldValueEpicLink in ["STOR-24753", "STOR-24889"])
-		{
-			return "UX Overhaul Tech Design";
-		}
-		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24465")
-		{
-			return "[POC] [Capgem] - UiPath to Blue Prism Converter (Not Synced)";
-		}
-		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24794")
-		{
-			return "AA11 to BP6.8 Converter MVP (Not Synced)";
-		}
-		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-25061")
-		{
-			return "Reversing Automation Anywhere v11 V2: ZIP/AAPKG Import & Project Structure";
-		}
-		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-24163")
-		{
-			return "Excel Update MVP";
-		}
-		if(fieldValueRelease == "12.1" && fieldValueEpicLink == "STOR-25052")
-		{
-			return "Reversing UiPath V1";
-		}
-	
 		// R&D Bucket
 		if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
 		{
