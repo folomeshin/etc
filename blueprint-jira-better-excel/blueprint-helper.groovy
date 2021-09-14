@@ -239,10 +239,10 @@ public class BlueprintHelper {
 		}
 		
 		String sprint = null;
-		String release = "Dublin";
+		String release = "Egypt";
 		def sprintTemplate = release + "-Sprint-";
 		def sprints = getCollectionField(issue, "Sprint");
-		def i = 4; // the number of sprints
+		def i = 3; // the number of sprints
 		while(i > 0)
 		{
 			if(sprints.contains(sprintTemplate + i))
@@ -254,9 +254,9 @@ public class BlueprintHelper {
 		}
 		if(sprint == null)
 		{
-			release = "Canada (12.4)";
+			release = "Dublin";
 			sprintTemplate = release + "-Sprint-";
-			i = 3;
+			i = 4;
 			while(i > 0)
 			{
 				if(sprints.contains(sprintTemplate + i))
@@ -273,7 +273,7 @@ public class BlueprintHelper {
 	
 	public def getLastSprintLabel(Issue issue)
 	{
-		return getLastSprint(issue)?.replace("ublin (12.5)", "")?.replace("anada (12.4)", "");
+		return getLastSprint(issue)?.replace("gypt (12.6)", "")?.replace("ublin (12.5)", "");
 	}
 	
 	
@@ -501,6 +501,60 @@ public class BlueprintHelper {
 		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
 		
+		// Egypt
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27540") //
+		{
+			return "AA to PAD Export in 12.6";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27457") //
+		{
+			return "Import from Blue Prism";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27587") //
+		{
+			return "Import from Blue Prism Mappings";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27500") //
+		{
+			return "Export to UiPath 12.6";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27752") //
+		{
+			return "BP to UiPath in 12.6";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27813") //
+		{
+			return "BP to PAD in 12.6";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27501") //
+		{
+			return "[AT&T] Import-Export Reporting v2";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27304") //
+		{
+			return "Blueprint Task Capture: Authentication & API";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27123") //
+		{
+			return "[Ford] 12.6 Visio Import Enhancements";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27784") //
+		{
+			return "[Optum] Investigate: Microsoft Graph API";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27895") //
+		{
+			return "Completing DGB Licensing Changes in 12.6";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27899") //
+		{
+			return "Completing RPA Export Wizard";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27534") //
+		{
+			return "Egypt (12.6) UX Enhancements";
+		}
+		
 		// Dublin
 		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26869") //
 		{
@@ -557,44 +611,6 @@ public class BlueprintHelper {
 		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26672") //
 		{
 			return "Dublin UX Enhancements";
-		}
-		
-		// Canada
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25570") //
-		{
-			return "[BNYM] Only Sync Artifacts when Approved";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25567") //
-		{
-			return "Import Wizard - Blue Prism";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25805") //
-		{
-			return "Import Wizard - UiPath";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25671") //
-		{
-			return "Applications Dashboard";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26136") //
-		{
-			return "Quality Dashboard v2: Risk Rating";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26142") //
-		{
-			return "UX Enhancements for 12.4 [BE & FE]";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26042") //
-		{
-			return "Import AA Variables  to COM";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-25782") //
-		{
-			return "[AT&T] AA v11 to Power Automate";
-		}
-		if(fieldValueRelease == "Canada (12.4)" && fieldValueEpicLink == "STOR-26431") //
-		{
-			return "Export COM to UiPath";
 		}
 		
 		// R&D Bucket
