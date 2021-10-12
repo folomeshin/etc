@@ -501,6 +501,56 @@ public class BlueprintHelper {
 		def customFieldEpicLink = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Epic Link")[0];
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
 		
+		// Fiji
+		if(fieldValueRelease == "Fiji (12.7)" && (fieldValueEpicLink == "STOR-27304" || fieldValueEpicLink == "28271"))
+		{
+			return "Task Capture MVP";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-27510")
+		{
+			return "Digital Blueprint API";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-27603")
+		{
+			return "RPA Export Wizard: Call or Embed Process Flattening v1";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-27784")
+		{
+			return "[Optum] Investigate: Microsoft Graph API";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28402")
+		{
+			return "Export to PAD in 12.7";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28437")
+		{
+			return "Process Editor UX Revamp";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28485")
+		{
+			return "[12.7] Investigate Upgrade to Windward";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28486")
+		{
+			return "Import from Blue Prism in 12.7";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28487")
+		{
+			return "Export to UiPath in 12.7";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28634")
+		{
+			return "Impact Analysis Enhancements";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28670")
+		{
+			return "Address Icon Inconsistencies & UX Enhancements";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28673")
+		{
+			return "Import-Export Reporting v3";
+		}
+		
 		// Egypt
 		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27540") //
 		{
@@ -557,64 +607,6 @@ public class BlueprintHelper {
 		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27534") //
 		{
 			return "Egypt (12.6) UX Enhancements";
-		}
-		
-		// Dublin
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26869") //
-		{
-			return "AT&T Migration: AAv11 to PAD";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26668") //
-		{
-			return "RPA Export Wizard";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-25566") //
-		{
-			return "Export COM to UiPath: Mapping";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26847") //
-		{
-			return "Export COM to UiPath";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26900") //
-		{
-			return "Import from RPA Enhancements";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-25192") //
-		{
-			return "Investigate Upgrade to Latest Windward";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26261") //
-		{
-			return "[BNYM][API] Create Projects with Artifact Content";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27070") //
-		{
-			return "[BNYM] OSAWA v2";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27082") //
-		{
-			return "[SoNY] Doc Gen: System Step Screenshots";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27344") //
-		{
-			return "[BNYM] Default Reporter Property";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27318") //
-		{
-			return "[Ford] 12.5 Visio Import Enhancements";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27347") //
-		{
-			return "[AT&T] Import-Export Reporting v1";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-27366") //
-		{
-			return "Quality Dash: Fix Applications Coverage %";
-		}
-		if(fieldValueRelease == "Dublin (12.5)" && fieldValueEpicLink == "STOR-26672") //
-		{
-			return "Dublin UX Enhancements";
 		}
 		
 		// R&D Bucket
