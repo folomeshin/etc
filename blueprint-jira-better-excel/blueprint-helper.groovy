@@ -502,7 +502,7 @@ public class BlueprintHelper {
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
 		
 		// Fiji
-		if(fieldValueRelease == "Fiji (12.7)" && (fieldValueEpicLink == "STOR-27304" || fieldValueEpicLink == "28271"))
+		if(fieldValueRelease == "Fiji (12.7)" && (fieldValueEpicLink == "STOR-27304" || fieldValueEpicLink == "STOR-28271"))
 		{
 			return "Task Capture MVP";
 		}
