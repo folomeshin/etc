@@ -510,10 +510,10 @@ public class BlueprintHelper {
 		{
 			return "Import from Blue Prism";
 		}
-		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27587") //
+		/*if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27587") //
 		{
 			return "Import from Blue Prism Mappings";
-		}
+		}*/
 		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27500") //
 		{
 			return "Export to UiPath 12.6";
@@ -537,6 +537,10 @@ public class BlueprintHelper {
 		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27123") //
 		{
 			return "[Ford] 12.6 Visio Import Enhancements";
+		}
+		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-28007") //
+		{
+			return "[BofA] Patch for 12.2";
 		}
 		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27784") //
 		{
@@ -614,7 +618,7 @@ public class BlueprintHelper {
 		}
 		
 		// R&D Bucket
-		if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management"])
+		if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management", "Tech Improvements"])
 		{
 			return "R&D Bucket";
 		}
