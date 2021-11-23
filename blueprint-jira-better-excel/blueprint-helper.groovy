@@ -526,10 +526,10 @@ public class BlueprintHelper {
 		{
 			return "Process Editor UX Revamp";
 		}
-		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28485")
+		/*if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28485")
 		{
 			return "[12.7] Investigate Upgrade to Windward";
-		}
+		}*/
 		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28486")
 		{
 			return "Import from Blue Prism in 12.7";
@@ -537,6 +537,10 @@ public class BlueprintHelper {
 		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28487")
 		{
 			return "Export to UiPath in 12.7";
+		}
+		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28506")
+		{
+			return "Import from AA in 12.7";
 		}
 		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28634")
 		{
