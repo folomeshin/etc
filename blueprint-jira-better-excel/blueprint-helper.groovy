@@ -502,7 +502,7 @@ public class BlueprintHelper {
 		def fieldValueEpicLink = issue.getCustomFieldValue(customFieldEpicLink)?.toString();
 		
 		// Fiji
-		if(fieldValueRelease == "Fiji (12.7)" && (fieldValueEpicLink == "STOR-27304" || fieldValueEpicLink == "STOR-28271"))
+		/*if(fieldValueRelease == "Fiji (12.7)" && (fieldValueEpicLink == "STOR-27304" || fieldValueEpicLink == "STOR-28271"))
 		{
 			return "Task Capture MVP";
 		}
@@ -526,10 +526,6 @@ public class BlueprintHelper {
 		{
 			return "Process Editor UX Revamp";
 		}
-		/*if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28485")
-		{
-			return "[12.7] Investigate Upgrade to Windward";
-		}*/
 		if(fieldValueRelease == "Fiji (12.7)" && fieldValueEpicLink == "STOR-28486")
 		{
 			return "Import from Blue Prism in 12.7";
@@ -564,10 +560,6 @@ public class BlueprintHelper {
 		{
 			return "Import from Blue Prism";
 		}
-		/*if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27587") //
-		{
-			return "Import from Blue Prism Mappings";
-		}*/
 		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27500") //
 		{
 			return "Export to UiPath 12.6";
@@ -611,7 +603,7 @@ public class BlueprintHelper {
 		if(fieldValueRelease == "Egypt (12.6)" && fieldValueEpicLink == "STOR-27534") //
 		{
 			return "Egypt (12.6) UX Enhancements";
-		}
+		}*/
 		
 		// R&D Bucket
 		if(fieldValue in ["Platform", "Tech Debt", "Technical", "Release Management", "Tech Improvements"])
@@ -619,7 +611,10 @@ public class BlueprintHelper {
 			return "R&D Bucket";
 		}
 		
-		return "Other";
+		def issueManager = ComponentAccessor.getIssueManager();
+		def epicSummary = issueManager.getIssueObject(fieldValueEpicLink)?.summary;
+		
+		return !epicSummary?.trim() ? "Other" : epicSummary;
 	}
 	
 	public def getDevOpsType(Issue issue) {
