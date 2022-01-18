@@ -6,6 +6,7 @@ import com.atlassian.jira.issue.util.AggregateTimeTrackingCalculatorFactory;
 import com.atlassian.jira.issue.util.AggregateTimeTrackingBean;
 import com.atlassian.jira.issue.CustomFieldManager;
 import com.atlassian.jira.issue.history.ChangeItemBean;
+import com.atlassian.greenhopper.service.sprint.Sprint;
 import java.text.*;
 
 bpHelper = new BlueprintHelper();
@@ -38,6 +39,12 @@ public class BlueprintHelper {
 		def field = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName(name)[0];
 		def fieldValue = issue.getCustomFieldValue(field);
 		return fieldValue?.collect { it.toString() }?.join(',');
+	}
+	
+	public String getSprints(Issue issue) {
+		def field = ComponentAccessor.getCustomFieldManager().getCustomFieldObjectsByName("Sprint")[0];
+		def fieldValue = issue.getCustomFieldValue(field);
+		return fieldValue?.collect { ((Sprint) it).name }?.join(',');
 	}
 	
 	public String getLabels(Issue issue) {
