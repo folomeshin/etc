@@ -492,6 +492,11 @@ public class BlueprintHelper {
 		return searchIssues('project = Storyteller AND issuetype in (Bug) AND status not in ("Bug: Closed") AND priority in (Highest, High)').size();
 	}
 	
+	public String getReleases(Issue issue) {
+		def releases = issue.fixVersions.any() ? issue.fixVersions.sort().join(", ") : "";
+		return releases;
+	}
+	
 	public def getReleaseComponent(Issue issue) {
 		if(!(issue.issueType.name in ["Epic", "Story", "Spike", "Tech Debt", "DevOps"]))
 		{
